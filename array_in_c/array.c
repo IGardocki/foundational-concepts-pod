@@ -26,8 +26,19 @@ ResultCode Init_Array(size_t item_size, Array** result) {
 ResultCode Insert_At_Head(Array* arr, void* item) {
     if(arr -> arr_size == 0) {
         printf("ZERO ARR SIZE\n");
-        arr-> array = calloc(1, arr->item_size);
-    };
+        // if the array has no items in it, clears and allocates memory for one
+        // item of the size of items in the array
+        arr-> array = calloc(1, arr->item_size); 
+        // copies memory using arr->array as the destination
+        // the item as the source to copy, and arr->item_size as the size of memory to copy
+        memcpy(arr->array, item, arr->item_size);
+        arr->arr_size += 1;
+    } else {
+        // realloc resizes the memory block pointed to by the pointer that was allocated before
+        // syntax is realloc(void *pointer, size_t size)
+        void* temp_arr = realloc(arr->array, (arr->arr_size +1) * arr->item_size);
+        arr->array = temp_arr;
+    }
 
     return kSuccess;
 }
