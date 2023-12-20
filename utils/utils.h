@@ -17,7 +17,10 @@ int *generate_random_numbers(int number_of_items){
 
 typedef enum Result {
     kSuccess = 0,
-    kFailure = -1
+    kFailure = -1,
+    kFound = 2,
+    kNotFound = 3,
+    kNullGuard = -2
 } Result;
 
 typedef Result ResultCode; 

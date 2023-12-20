@@ -8,6 +8,16 @@ typedef struct {
   void* array; // an opaque pointer (meaning it could point to any type) to the array
 } Array;
 
+typedef int (*item_comparator)(const void* x, const void* y);
+
+typedef void (*arr_enumerator)(const void* x);
+
+// typedef int (*enumerator)(const void* x);
+
 // takes in the size of the item so we could init an array of any type, and a pointer to a pointer to an array
 ResultCode Init_Array(size_t item_size, Array**);
 ResultCode Insert_At_Head(Array* arr, void* item);
+ResultCode Insert_At_Tail(Array* arr, void* item);
+ResultCode Array_Search(Array* arr, void* query, item_comparator comparator , void** result);
+ResultCode Array_Enumeration(Array* arr, arr_enumerator enumerator);
+

@@ -5,13 +5,15 @@
 #include <string.h>
 #include <time.h>
 
+// TODO Set up testing framework
+
 // takes in item size and a pointer to a pointer to an Array struct
 ResultCode Init_Array(size_t item_size, Array** result) {
     // init empty arr
     // define item size for elements
 
     // the second arg is a pointer to a pointer to result. If this is null, returns a fail code
-    if(result == NULL) return kFailure;
+    if(result == NULL) return kNullGuard;
 
     // sets a pointer to an Array struct, calls it array, then uses calloc to allocate memory
     // The syntax of calloc is: void *calloc(size_t num, size_t size);
@@ -23,9 +25,9 @@ ResultCode Init_Array(size_t item_size, Array** result) {
     return kSuccess;
 }
 
-ResultCode Insert_At_Head(Array* arr, void* item) {
-    if(arr -> arr_size == 0) {
-        printf("ZERO ARR SIZE\n");
+// This check was needed for both insertin at head and tail, so made into its own function
+ResultCode Create_First_Arr_Item(Array* arr, void* item){
+        if(arr == NULL || item == NULL) return kNullGuard;
         // if the array has no items in it, clears and allocates memory for one
         // item of the size of items in the array
         arr-> array = calloc(1, arr->item_size); 
@@ -33,101 +35,140 @@ ResultCode Insert_At_Head(Array* arr, void* item) {
         // the item as the source to copy, and arr->item_size as the size of memory to copy
         memcpy(arr->array, item, arr->item_size);
         arr->arr_size += 1;
+        return kSuccess;
+}
+
+ResultCode Insert_At_Head(Array* arr, void* item) {
+    if(arr == NULL || item == NULL) return kNullGuard;
+
+    if(arr -> arr_size == 0) {
+        int result_code = Create_First_Arr_Item(arr, item);
     } else {
         // realloc resizes the memory block pointed to by the pointer that was allocated before
         // syntax is realloc(void *pointer, size_t size)
         void* temp_arr = realloc(arr->array, (arr->arr_size +1) * arr->item_size);
+        // sets the array pointer to the temp_arr
         arr->array = temp_arr;
+
+        // moves the array head over one block
+        memmove((char*)arr->array + arr->item_size, arr->array,arr->item_size*arr->arr_size);
+        arr->arr_size +=1;
+        // inserts the new item where the previous head item was 
+        memcpy(arr->array, item, arr->item_size);
     }
 
     return kSuccess;
 }
 
-// void insert_at_head(int* array, int item){
-//     // pass in pointer to arr
-//     // use realloc so im not risking overflowing into things I shouldnt be
-//     for(int i = arr_size; i >= 0; i--) {
-//         array[i + 1] = array[i];
-//     }
-//     array[0] = item;
-//     arr_size++;
-//     printf("%d inserted at head!\n", item);
-// // insert elements at beginning of arr
-// // ensure arr expands to accommodate new entries
-// }
+ResultCode Insert_At_Tail(Array* arr, void* item) {
+    if(arr == NULL || item == NULL) return kNullGuard;
 
-// void insert_at_tail(int* array, int item) {
-//     array[arr_size] = item;
-//     arr_size++;
-//     printf("%d inserted at tail!\n", item);
-// }
+    if(arr->arr_size == 0){
+       int result_code = Create_First_Arr_Item(arr, item);
+    }
+    else {
+        void* temp_arr = realloc(arr->array, (arr->arr_size +1) * arr->item_size);
+        arr->array = temp_arr;
+        memcpy(arr->array + arr->arr_size * arr->item_size, item, arr->item_size);
+        arr->arr_size +=1;
+    }
+    return kSuccess;
+}
 
-// int search(int* array, int item) {
-//     for(int i = 0; i<arr_size; i++){
-//         if(array[i] == item){
-//             return item;
-//         }
-//     }
-//     return -1;
-//     // create search to locate elements
-//     // use comparator to id position of element
-// }
 
-// void enumeration() {
-//     // apply provided function to each element sequentially
-// }
+ResultCode Array_Search(Array* arr, void* query, item_comparator comparator, void** result){
+    if(arr == NULL || query == NULL || comparator == NULL || result == NULL) return kNullGuard;
 
-// int max(int* array){
-//     // find max element as id'ed by comparator
-//     int max = array[0];
-//     for(int i = 0; i<arr_size; i++){
-//         if(array[i] > max){
-//             max = array[i];
-//         }
-//     }
-//     return max;
-//     printf("max: %d", max);
-// }
+    for(int i = 0; i < arr->arr_size; i++){
+        void* current = arr->array + i * arr->item_size;
 
-// int rank(int* array, int item) {
-//     int rank = 0;
-//     // establish rank of element based off of how many elements are smaller than it
-//     // find num of elements smaller than item
-//     for(int i = 0; i < arr_size; i++){
-//         if(array[i] > item){
-//             rank++;
-//         }
-//     }
-//     return rank;
-// }
+        if(comparator(current, query) == 0){
+            *result = current;
+            return kFound;
+        }
+    }
+    return kNotFound;
+}
+
+ResultCode Array_Max(Array* arr, item_comparator comparator, void** max_result){
+    if(arr == NULL || comparator == NULL || max_result == NULL) return kNullGuard;
+    void* max = arr->array;
+    for(int i = 1; i < arr->arr_size; i++){
+        void* current = arr->array + i * arr->item_size;
+        if(comparator(max, current) > 0){
+            max = current;
+        }
+    }
+    *max_result = max;
+    return kSuccess;
+}
+
+    // apply provided function to each element sequentially
+ResultCode Array_Enumeration(Array* arr, arr_enumerator enumerator) {
+    if(arr == NULL || enumerator == NULL) return kNullGuard;
+
+    for(int i = 0; i < arr->arr_size; i++){
+        void* current = arr->array + i * arr->item_size;
+        enumerator(current);
+    }
+    return kSuccess;
+}
+
+ResultCode Array_Rank(Array* arr, item_comparator comparator, void* item, int** rank_result) {
+    int* rank = 0;
+    for(int i = 0; i < arr->arr_size; i++){
+        void* current = arr->array + i * arr->item_size;
+        if(comparator(item, current) < 0){
+            rank++;
+        }
+    }
+    // printf("RANK: %i\n", rank);
+    *rank_result = rank;
+    return kSuccess;
+}
+
+int PIntComparator(const void* x, const void* y) { return *(int*)x - *(int*)y; };
+
+int PCharComparator(const void* x, const void* y) {
+    return *(char*)x - *(char*)y;
+}
+
+// a simple enumerator that just prints each thing in the arr
+void Enumerator(const void* x){
+    printf("ENUMERATOR: %i\n", *(int*)x);
+}
 
 int main() {
     Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
-    printf("%i\n", Init_Array(sizeof(int), &array)); // passes in int size, and the reference to the array
-    int test = 15; //declares an int
-    printf("%i\n", Insert_At_Head(array, &test)); // passes the array pointer and a reference to test into the function
+    Init_Array(sizeof(int), &array); // passes in int size, and the reference to the array
+    int test0 = 15; //declares an int
+    int test1 = 20;
+ 
+    void* max_result_store = NULL;
+    Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
+    Insert_At_Tail(array, &test1);
 
+    void* search_result_store = NULL;
+    Array_Search(array, &test0, PIntComparator, &search_result_store);
+
+    Array_Max(array, PIntComparator, &max_result_store);
+    Array_Enumeration(array, Enumerator);
+
+    int test_for_rank = 10;
+    int* rank_result_store = NULL;
+    Array_Rank(array, PIntComparator, &test_for_rank, &rank_result_store);
     free(array);
-    // int * rand = generate_random_numbers(2);
-    // clock_t start = clock();
-    // int* array = init_array(5);
-    // insert_at_tail(array, 6);
-    // insert_at_tail(array, 7);
-    // insert_at_head(array, 9);
-    // printf("Array contains: \n");
-    // for(int i = 0; i < arr_size; i++){
-    //     printf("%d\n", array[i]);
-    // }
-    // int search_result = search(array, 0);
-    // printf("Search result: %d\n", search_result);
-    // int max_result = max(array);
-    // printf("Max Result: %d\n", max_result);
-    // int rank_result = rank(array, 9);
-    // printf("Rank Result: %d\n", rank_result);
-    // free(array);
-    // clock_t end = clock();
-    // double execution_time = ((double)(end - start))/CLOCKS_PER_SEC;
-    // free(rand);
-    // printf("EXECUTION TIME: %f SECONDS\n", execution_time);
-    // return 0;
+
+    Array* char_array = NULL;
+    char c = 'c';
+    char a = 'a';
+    char t = 't' ;
+    void* cat_search_res_store = NULL;
+    Init_Array(sizeof(char), &char_array);
+    Insert_At_Head(char_array, &c);
+    Insert_At_Tail(char_array, &a);
+    Insert_At_Tail(char_array, &t);
+    Array_Search(char_array, &c, PCharComparator, &cat_search_res_store);
+    Array_Enumeration(char_array, Enumerator);
+    free(char_array);
 }
