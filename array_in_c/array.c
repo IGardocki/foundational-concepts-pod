@@ -25,7 +25,7 @@ ResultCode Init_Array(size_t item_size, Array** result) {
     return kSuccess;
 }
 
-// This check was needed for both insertin at head and tail, so made into its own function
+// This check was needed for both inserting at head and tail, so made into its own function
 ResultCode Create_First_Arr_Item(Array* arr, void* item){
         if(arr == NULL || item == NULL) return kNullGuard;
         // if the array has no items in it, clears and allocates memory for one
@@ -42,7 +42,7 @@ ResultCode Insert_At_Head(Array* arr, void* item) {
     if(arr == NULL || item == NULL) return kNullGuard;
 
     if(arr -> arr_size == 0) {
-        int result_code = Create_First_Arr_Item(arr, item);
+        size_t result_code = Create_First_Arr_Item(arr, item);
     } else {
         // realloc resizes the memory block pointed to by the pointer that was allocated before
         // syntax is realloc(void *pointer, size_t size)
@@ -64,7 +64,7 @@ ResultCode Insert_At_Tail(Array* arr, void* item) {
     if(arr == NULL || item == NULL) return kNullGuard;
 
     if(arr->arr_size == 0){
-       int result_code = Create_First_Arr_Item(arr, item);
+       size_t result_code = Create_First_Arr_Item(arr, item);
     }
     else {
         void* temp_arr = realloc(arr->array, (arr->arr_size +1) * arr->item_size);
@@ -115,15 +115,15 @@ ResultCode Array_Enumeration(Array* arr, arr_enumerator enumerator) {
 }
 
 ResultCode Array_Rank(Array* arr, item_comparator comparator, void* item, int** rank_result) {
-    int* rank = 0;
+    int rank = 0;
     for(int i = 0; i < arr->arr_size; i++){
         void* current = arr->array + i * arr->item_size;
         if(comparator(item, current) < 0){
             rank++;
         }
     }
-    // printf("RANK: %i\n", rank);
-    *rank_result = rank;
+    printf("RANK: %d\n", rank);
+    *rank_result = &rank;
     return kSuccess;
 }
 
@@ -170,5 +170,9 @@ int main() {
     Insert_At_Tail(char_array, &t);
     Array_Search(char_array, &c, PCharComparator, &cat_search_res_store);
     Array_Enumeration(char_array, Enumerator);
+
+    char test_for_char_rank = 'l';
+    int* char_rank_result_store = NULL;
+    Array_Rank(char_array, PCharComparator, &test_for_char_rank, &char_rank_result_store);
     free(char_array);
 }
