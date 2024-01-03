@@ -1,6 +1,7 @@
 // CODE I WROTE AFTER WRITING ARRAY IN C
 #include "sorted_array.h"
 #include "../utils/utils.h"
+#include "../utils/comparators.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,23 +38,48 @@ ResultCode Create_First_Arr_Item(Array* arr, void* item){
         return kSuccess;
 }
 
-ResultCode Insert_At_Head(Array* arr, void* item) {
+// for use in determining rankings
+ResultCode Array_Rank(Array* arr, item_comparator comparator, void* item, int** rank_result) {
+    int rank = 0;
+    printf("%zu\n", arr->arr_size);
+    for(int i = 0; i < arr->arr_size; i++){
+        void* current = arr->array + i * arr->item_size;
+        // determines number of items in array that are larger than the item
+        if(comparator(item, current) < 0){
+            rank++;
+            printf("COMP HIT! RANK: ");
+        }
+    }
+    printf("RANK: %d\n", rank);
+    *rank_result = &rank;
+    return kSuccess;
+}
+
+ResultCode Ordered_Insertion(Array* arr, item_comparator comparator, void* item) {
     if(arr == NULL || item == NULL) return kNullGuard;
 
     if(arr -> arr_size == 0) {
         int result_code = Create_First_Arr_Item(arr, item);
     } else {
-        // realloc resizes the memory block pointed to by the pointer that was allocated before
-        // syntax is realloc(void *pointer, size_t size)
-        void* temp_arr = realloc(arr->array, (arr->arr_size +1) * arr->item_size);
-        // sets the array pointer to the temp_arr
-        arr->array = temp_arr;
+    // TODO: find rank of thing to be inserted 
+    int* rank_result_store = NULL;
+    Array_Rank(arr, PIntComparator, &item, &rank_result_store);
+    
+    arr->arr_size +=1;
+ 
+    // TODO: realloc to include memory for one more item
 
-        // moves the array head over one block
-        memmove((char*)arr->array + arr->item_size, arr->array,arr->item_size*arr->arr_size);
-        arr->arr_size +=1;
-        // inserts the new item where the previous head item was 
-        memcpy(arr->array, item, arr->item_size);
+    //     // realloc resizes the memory block pointed to by the pointer that was allocated before
+    //     // syntax is realloc(void *pointer, size_t size)
+    //     void* temp_arr = realloc(arr->array, (arr->arr_size +1) * arr->item_size);
+    //     // sets the array pointer to the temp_arr
+    //     arr->array = temp_arr;
+
+    //     // moves the array head over one block
+    //     memmove((char*)arr->array + arr->item_size, arr->array,arr->item_size*arr->arr_size);
+    //     arr->arr_size +=1;
+    //     // inserts the new item where the previous head item was 
+    //     memcpy(arr->array, item, arr->item_size);
     }
 
     return kSuccess;
@@ -64,12 +90,14 @@ int main(){
     Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
     Init_Array(sizeof(size_t), &array); // passes in int size, and the reference to the array
 
-    size_t test0 = 853;
-    size_t test1 = 850;
-    size_t test2 = 851;
+    int test0 = 853;
+    int test1 = 850;
+    int test2 = 851;
 
-    Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
-
+    printf("TEST: %i\n", PIntComparator(&test1, &test0));
+    Ordered_Insertion(array, PIntComparator, &test1); // passes the array pointer and a reference to test into the function
+    Ordered_Insertion(array, PIntComparator, &test0);
+    Ordered_Insertion(array, PIntComparator, &test2);
     printf("Hello World\n");
 }
 

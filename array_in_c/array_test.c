@@ -4,8 +4,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+// TODO: FIGURE OUT HOW TO GET THIS FILE TO RECOGNIZE CUNIT
 #include "CUnit/Basic.h"
 #include "CUnit/CUnit.h"
-#include "common_math.h"
-// #include "malloc_test_wrapper.h"
-// #include "test_helpers.h"
+
+int main (){
+    printf("Hello World!\n");
+}

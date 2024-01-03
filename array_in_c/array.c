@@ -1,5 +1,6 @@
 #include "array.h"
 #include "../utils/utils.h"
+#include "../utils/comparators.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -118,6 +119,7 @@ ResultCode Array_Rank(Array* arr, item_comparator comparator, void* item, int** 
     int rank = 0;
     for(int i = 0; i < arr->arr_size; i++){
         void* current = arr->array + i * arr->item_size;
+        // determines number of items in array that are larger than the item
         if(comparator(item, current) < 0){
             rank++;
         }
@@ -127,11 +129,11 @@ ResultCode Array_Rank(Array* arr, item_comparator comparator, void* item, int** 
     return kSuccess;
 }
 
-int PIntComparator(const void* x, const void* y) { return *(int*)x - *(int*)y; };
+// int PIntComparator(const void* x, const void* y) { return *(int*)x - *(int*)y; };
 
-int PCharComparator(const void* x, const void* y) {
-    return *(char*)x - *(char*)y;
-}
+// int PCharComparator(const void* x, const void* y) {
+//     return *(char*)x - *(char*)y;
+// }
 
 // a simple enumerator that just prints each thing in the arr
 void Enumerator(const void* x){
