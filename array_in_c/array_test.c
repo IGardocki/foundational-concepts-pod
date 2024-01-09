@@ -9,5 +9,8 @@
 #include "CUnit/CUnit.h"
 
 int main (){
-    printf("Hello World!\n");
+    // printf("Hello World!\n");
+    Array* array = NULL;
+    ResultCode result_code = Init_Array(sizeof(int), &array);
+    CU_ASSERT_EQUAL(result_code, kSuccess);
 }

@@ -1,5 +1,6 @@
-#include <stdlib.h>
 #pragma once
+#include <stdlib.h>
+
 
 // function to generate random numbers for benchmarking
 int *generate_random_numbers(int number_of_items){

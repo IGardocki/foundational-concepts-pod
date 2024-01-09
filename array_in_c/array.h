@@ -1,4 +1,5 @@
 #include "../utils/utils.h"
+// #include "array.c"
 
 #pragma once
 // creates a pseudo class in C
