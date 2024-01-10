@@ -96,7 +96,7 @@ ResultCode Array_Max(Array* arr, item_comparator comparator, void** max_result){
     void* max = arr->array;
     for(int i = 1; i < arr->arr_size; i++){
         void* current = arr->array + i * arr->item_size;
-        if(comparator(max, current) > 0){
+        if(comparator(max, current) < 0){
             max = current;
         }
     }
