@@ -41,10 +41,12 @@ ResultCode Create_First_Arr_Item(Array* arr, void* item){
 // for use in determining rankings
 ResultCode Array_Rank(Array* arr, item_comparator comparator, void* item, int** rank_result) {
     int rank = 0;
-    printf("%zu\n", arr->arr_size);
+    printf("array size = %zu\n", arr->arr_size);
     for(int i = 0; i < arr->arr_size; i++){
         void* current = arr->array + i * arr->item_size;
         // determines number of items in array that are larger than the item
+        printf("i= %d, current: %d\n", i, *(int*)current);
+        printf("result= %d\n",comparator(item, current));
         if(comparator(item, current) < 0){
             rank++;
             printf("COMP HIT! RANK: ");
@@ -65,7 +67,7 @@ ResultCode Ordered_Insertion(Array* arr, item_comparator comparator, void* item)
     int* rank_result_store = NULL;
     Array_Rank(arr, PIntComparator, &item, &rank_result_store);
     
-    arr->arr_size +=1;
+    // arr->arr_size +=1;
  
     // TODO: realloc to include memory for one more item
 

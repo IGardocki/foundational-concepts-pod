@@ -1,6 +1,7 @@
+#pragma once
 #include "../utils/utils.h"
 
-#pragma once
+
 // creates a pseudo class in C
 typedef struct {
   size_t arr_size; // number of items in array
