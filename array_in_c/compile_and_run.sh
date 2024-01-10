@@ -1,5 +1,5 @@
 #!/bin/bash
-cc -o array array.c
+cc -o array array.c 
 ./array
 
 # TODO: Figure out how to properly run tests

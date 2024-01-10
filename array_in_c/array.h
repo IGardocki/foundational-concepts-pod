@@ -1,7 +1,7 @@
-#include "../utils/utils.h"
-// #include "array.c"
-
 #pragma once
+#include "../utils/utils.h"
+
+
 // creates a pseudo class in C
 typedef struct {
   size_t arr_size; // number of items in array

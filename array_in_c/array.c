@@ -140,41 +140,41 @@ void Enumerator(const void* x){
     printf("ENUMERATOR: %i\n", *(int*)x);
 }
 
-int main() {
-    Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
-    Init_Array(sizeof(int), &array); // passes in int size, and the reference to the array
-    int test0 = 15; //declares an int
-    int test1 = 20;
+// int main() {
+//     Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
+//     Init_Array(sizeof(int), &array); // passes in int size, and the reference to the array
+//     int test0 = 15; //declares an int
+//     int test1 = 20;
  
-    void* max_result_store = NULL;
-    Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
-    Insert_At_Tail(array, &test1);
+//     void* max_result_store = NULL;
+//     Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
+//     Insert_At_Tail(array, &test1);
 
-    void* search_result_store = NULL;
-    Array_Search(array, &test0, PIntComparator, &search_result_store);
+//     void* search_result_store = NULL;
+//     Array_Search(array, &test0, PIntComparator, &search_result_store);
 
-    Array_Max(array, PIntComparator, &max_result_store);
-    Array_Enumeration(array, Enumerator);
+//     Array_Max(array, PIntComparator, &max_result_store);
+//     Array_Enumeration(array, Enumerator);
 
-    int test_for_rank = 10;
-    int* rank_result_store = NULL;
-    Array_Rank(array, PIntComparator, &test_for_rank, &rank_result_store);
-    free(array);
+//     int test_for_rank = 10;
+//     int* rank_result_store = NULL;
+//     Array_Rank(array, PIntComparator, &test_for_rank, &rank_result_store);
+//     free(array);
 
-    Array* char_array = NULL;
-    char c = 'c';
-    char a = 'a';
-    char t = 't' ;
-    void* cat_search_res_store = NULL;
-    Init_Array(sizeof(char), &char_array);
-    Insert_At_Head(char_array, &c);
-    Insert_At_Tail(char_array, &a);
-    Insert_At_Tail(char_array, &t);
-    Array_Search(char_array, &c, PCharComparator, &cat_search_res_store);
-    Array_Enumeration(char_array, Enumerator);
+//     Array* char_array = NULL;
+//     char c = 'c';
+//     char a = 'a';
+//     char t = 't' ;
+//     void* cat_search_res_store = NULL;
+//     Init_Array(sizeof(char), &char_array);
+//     Insert_At_Head(char_array, &c);
+//     Insert_At_Tail(char_array, &a);
+//     Insert_At_Tail(char_array, &t);
+//     Array_Search(char_array, &c, PCharComparator, &cat_search_res_store);
+//     Array_Enumeration(char_array, Enumerator);
 
-    char test_for_char_rank = 'l';
-    int* char_rank_result_store = NULL;
-    Array_Rank(char_array, PCharComparator, &test_for_char_rank, &char_rank_result_store);
-    free(char_array);
-}
+//     char test_for_char_rank = 'l';
+//     int* char_rank_result_store = NULL;
+//     Array_Rank(char_array, PCharComparator, &test_for_char_rank, &char_rank_result_store);
+//     free(char_array);
+// }
