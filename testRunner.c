@@ -1,4 +1,3 @@
-// TODO: LOOK AT DOCS FOR CUNIT AND CREATE TESTRUNNER
 #include "CUnit/Basic.h"
 extern int RegisterArrayTests(void);
 
