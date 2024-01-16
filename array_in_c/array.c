@@ -6,7 +6,6 @@
 #include <string.h>
 #include <time.h>
 
-// TODO Set up testing framework
 
 // takes in item size and a pointer to a pointer to an Array struct
 ResultCode Init_Array(size_t item_size, Array** result) {
@@ -136,9 +135,9 @@ ResultCode Array_Rank(Array* arr, item_comparator comparator, void* item, int** 
 // }
 
 // a simple enumerator that just prints each thing in the arr
-void Enumerator(const void* x){
-    printf("ENUMERATOR: %i\n", *(int*)x);
-}
+// void Enumerator(const void* x){
+//     printf("ENUMERATOR: %i\n", *(int*)x);
+// }
 
 // int main() {
 //     Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL

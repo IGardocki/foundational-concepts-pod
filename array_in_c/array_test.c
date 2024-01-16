@@ -10,11 +10,6 @@
 #define CU_TEST_INFO(test_func) \
 {#test_func, test_func}
 
-
-static void ShouldFail(){
-    CU_ASSERT_EQUAL(false, true);
-}
-
 static void ShouldPass(){
     CU_ASSERT_EQUAL(true, true);
 }
@@ -90,15 +85,55 @@ static void ShouldFindMax(){
     ResultCode result = Array_Max(array, PIntComparator, &max_result_store);
     CU_ASSERT_EQUAL(result, kSuccess);
     int max_result = *(int*)max_result_store;
-    printf("XXXXXXXXXX %i",max_result);
     CU_ASSERT_EQUAL(max_result, 850);
 }
+
+void Enumerator(const void* x){
+    printf("ENUMERATOR: %i\n", *(int*)x);
+}
+
+static void ShouldEnumerate(){
+    Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
+    Init_Array(sizeof(int), &array); // passes in int size, and the reference to the array
+    int test0 = 15; //declares an int
+    int test1 = 20;
+    int test2 = 850;
+ 
+
+    Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
+    Insert_At_Tail(array, &test1);
+    Insert_At_Head(array, &test2);
+
+    ResultCode result = Array_Enumeration(array, Enumerator);
+    CU_ASSERT_EQUAL(result, kSuccess);
+}
+
+static void ShouldRank(){
+    Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
+    Init_Array(sizeof(int), &array); // passes in int size, and the reference to the array
+    int test0 = 15; //declares an int
+    int test1 = 20;
+    int test2 = 850;
+ 
+
+    Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
+    Insert_At_Tail(array, &test1);
+    Insert_At_Head(array, &test2);
+
+    int test_for_rank = 10;
+    int* rank_result_store = NULL;
+    ResultCode result = Array_Rank(array, PIntComparator, &test_for_rank, &rank_result_store);
+    int rank_result = *(int*)rank_result_store;
+    CU_ASSERT_EQUAL(result, kSuccess);
+    CU_ASSERT_EQUAL(rank_result, 3);
+}
+
 
 // TODO: LOOK INTO MAKE
 int noop(void) { return 0; }
 
 int RegisterArrayTests(){
-    CU_TestInfo Array_tests[] = {CU_TEST_INFO(ShouldFail),
+    CU_TestInfo Array_tests[] = {
                                CU_TEST_INFO(ShouldPass),
                                CU_TEST_INFO(ShouldInitArray),
                                CU_TEST_INFO(ShouldInsertAtHead),
@@ -106,6 +141,8 @@ int RegisterArrayTests(){
                                CU_TEST_INFO(ShouldSearchArrayAndReturnKFound),
                                CU_TEST_INFO(ShouldSearchArrayAndReturnKNotFound),
                                CU_TEST_INFO(ShouldFindMax),
+                               CU_TEST_INFO(ShouldEnumerate),
+                               CU_TEST_INFO(ShouldRank),
                                CU_TEST_INFO_NULL
 };
 
