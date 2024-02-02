@@ -14,17 +14,27 @@ static void ShouldPass(){
     CU_ASSERT_EQUAL(true, true);
 }
 
+static void ShouldInitArray(){
+    Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
+    ResultCode result = Init_Sorted_Array(sizeof(int), &array); // passes in int size, and the reference to the array
+    CU_ASSERT_EQUAL(result, kSuccess);
+}
+
+int sorted_arr_noop(void) { return 0; }
+
 int RegisterSortedArrayTests(){
     CU_TestInfo Array_tests[] = {
                                CU_TEST_INFO(ShouldPass),
+                               CU_TEST_INFO(ShouldInitArray),
+                               CU_TEST_INFO_NULL
 
 };
 
-int noop(void) { return 0; }
+
 
 CU_SuiteInfo suites[] = {{.pName = "Sorted_Array",
-                            .pInitFunc = noop,
-                            .pCleanupFunc = noop,
+                            .pInitFunc = sorted_arr_noop,
+                            .pCleanupFunc = sorted_arr_noop,
                             .pTests = Array_tests},
                            CU_SUITE_INFO_NULL};
 

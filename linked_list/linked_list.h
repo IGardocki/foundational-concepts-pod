@@ -1,11 +1,12 @@
-typedef struct {
-    void* data;
-    struct LLItem* previous;
-    struct LLItem* next;
-} LLItem;
+typedef struct Node{
+    double data;
+    // struct LLItem* previous;
+    struct Node* next;
+} Node;
 
 typedef struct {
     size_t size;
-    LLItem* head;
-    LLItem* tail;
+    Node* head;
+    Node* tail;
+    int number_of_items;
 } LinkedList;

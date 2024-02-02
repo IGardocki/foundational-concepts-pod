@@ -1,5 +1,6 @@
 #include "CUnit/Basic.h"
 extern int RegisterArrayTests(void);
+extern int RegisterSortedArrayTests(void);
 
 
 int main()
@@ -15,6 +16,13 @@ int main()
       CU_cleanup_registry();
       return -1;
    }
+
+   if(RegisterSortedArrayTests() != 0){
+      CU_cleanup_registry();
+      return -1;
+   }
+
+   
 
    CU_basic_set_mode(CU_BRM_VERBOSE);
    CU_basic_run_tests();
