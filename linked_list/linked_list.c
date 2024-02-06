@@ -79,12 +79,15 @@ ResultCode LinkedList_Insertion(LinkedList* linked_list, double item_to_insert, 
         linked_list->number_of_items +=1;
     }
 
-
     return kSuccess;
 }
 
 //  - Search: Implement both a generic and predicate-based search. 
-void LinkedList_Search(){
+void LinkedList_Search(LinkedList* linked_list, double item_to_search_for){
+    for(int i = 0; i < linked_list->number_of_items; i++){
+        printf("hi");
+        linked_list
+    }
 
 }
 
@@ -125,6 +128,7 @@ int main (){
     LinkedList_Insertion(linked_list, 1, 0);
     LinkedList_Insertion(linked_list, 3, 1);
     PrintLinkedList(linked_list);
+    LinkedList_Search(linked_list, 12);
     // printf("Hello World\n");
     free(linked_list);
 }
