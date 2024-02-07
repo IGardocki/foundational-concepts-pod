@@ -3,11 +3,9 @@
 import ctypes
 from enum import IntEnum
 import time
-from random import randint
+# from random import randint
 
 lib = ctypes.CDLL('./algo.so')
-
-# need to figure out how to use ctypes with current c code 
 
 number_of_items = [10 ** 2, 10 ** 3, 10 ** 4, 10 ** 5]
 
@@ -17,16 +15,24 @@ class CtypesEnum(IntEnum):
     def from_param(cls, obj):
         return int(obj)
 
-lib.test.argtypes = [ctypes.c_int]
-lib.test.restype = ctypes.c_double
-print(lib.test(5))
-# generate rancom arr with certain number of items to test ops with 
 
+lib.Array_Insert_At_Head_Benchmark.argtypes = [ctypes.c_size_t]
+lib.Array_Insert_At_Head_Benchmark.restype = ctypes.c_double
 
-# loop over each operation
-# todo: Start time before each function
+lib.Array_Insert_At_Tail_Benchmark.argtypes = [ctypes.c_size_t]
+lib.Array_Insert_At_Tail_Benchmark.restype = ctypes.c_double
 
-# stop after each
+lib.Array_Search_Benchmark.argtypes = [ctypes.c_size_t]
+lib.Array_Search_Benchmark.restype = ctypes.c_double
+
+lib.Array_Max_Benchmark.argtypes = [ctypes.c_size_t]
+lib.Array_Max_Benchmark.restype = ctypes.c_double
+
+for num in number_of_items:
+    print(f'Array_Insert_At_Head_Benchmark time {num}: {lib.Array_Insert_At_Head_Benchmark(num)}\n')
+    print(f'Array_Insert_At_Tail_Benchmark time {num}: {lib.Array_Insert_At_Tail_Benchmark(num)}\n')
+    print(f'Array_Search_Benchmark time {num}: {lib.Array_Search_Benchmark(num)}\n')
+    print(f'Array_Max_Benchmark time {num}: {lib.Array_Max_Benchmark(num)}\n')
 
 
 # eventually will gen charts
