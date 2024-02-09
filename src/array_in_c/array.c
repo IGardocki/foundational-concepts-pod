@@ -17,7 +17,7 @@ ResultCode Init_Array(size_t item_size, Array** result) {
 
     // sets a pointer to an Array struct, calls it array, then uses calloc to allocate memory
     // The syntax of calloc is: void *calloc(size_t num, size_t size);
-    // I was orignally using malloc for this, but calloc allocates multiple memory blocks to a single variable,
+    // I was originally using malloc for this, but calloc allocates multiple memory blocks to a single variable,
     // which is better for arrays.
     Array* array = calloc(sizeof(Array), 1);
     array->item_size = item_size; // the -> syntax is used to access properties of a pseudoclass in c. Similar to array.item_size

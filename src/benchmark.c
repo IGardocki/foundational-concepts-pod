@@ -125,3 +125,69 @@ double Array_Max_Benchmark(size_t number_of_items_to_insert){
     printf("TIME: %f\n", time);
     return time;
 }
+
+    // provide enumerator for below function
+    void Sample_Enumerator(const void* x){
+        // printf("ENUMERATOR: %i\n", *(int*)x);
+        *(int*)x += 1;
+    }
+
+double Array_Enumeration_Benchmark(size_t number_of_items_to_insert){
+    Array* array = NULL;
+    Init_Array(sizeof(int), &array);
+
+    // create arr of items to insert
+    size_t arr_of_items_to_insert[number_of_items_to_insert];
+    for(int i = 0; i < number_of_items_to_insert; i++){
+        arr_of_items_to_insert[i] = rand();
+    }
+
+    // insert each thing into the array at the tail
+    for(int i = 0; i < number_of_items_to_insert; i++){
+        Insert_At_Tail(array, &arr_of_items_to_insert[i]);
+    }
+
+    // start clock
+    clock_t t = clock(); 
+
+    Array_Enumeration(array, Sample_Enumerator);
+
+    // get time elapsed 
+    t = clock() - t;
+    double time = ((double)t) / CLOCKS_PER_SEC;
+    printf("TIME: %f\n", time);
+    return time;
+}
+
+double Array_Rank_Benchmark(size_t number_of_items_to_insert){
+    Array* array = NULL;
+    Init_Array(sizeof(int), &array);
+
+    // create arr of items to insert
+    size_t arr_of_items_to_insert[number_of_items_to_insert];
+    for(int i = 0; i < number_of_items_to_insert; i++){
+        arr_of_items_to_insert[i] = rand();
+    }
+
+    // insert each thing into the array at the tail
+    for(int i = 0; i < number_of_items_to_insert; i++){
+        Insert_At_Tail(array, &arr_of_items_to_insert[i]);
+    }
+
+    // create query to get rank for
+    int query = rand();
+
+    // create a search result store
+    int* rank_result_store = NULL;
+
+    // start clock
+    clock_t t = clock(); 
+
+    Array_Rank(array, PIntComparator, &query, &rank_result_store);
+
+    // get time elapsed 
+    t = clock() - t;
+    double time = ((double)t) / CLOCKS_PER_SEC;
+    printf("TIME: %f\n", time);
+    return time;
+}
