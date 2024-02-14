@@ -193,7 +193,7 @@ double Array_Rank_Benchmark(size_t number_of_items_to_insert){
     printf("TIME: %f\n", time);
     return time;
 }
-
+// ORDERED INSERTION IS NOT COMPLETELY FUNCTIONAL YET
 double Sorted_Array_Ordered_Insertion_Benchmark(size_t number_of_items_to_insert){
     Array* sorted_array = NULL;
     Init_Sorted_Array(sizeof(size_t), &sorted_array);
