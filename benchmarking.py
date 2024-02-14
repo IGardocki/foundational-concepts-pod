@@ -34,6 +34,9 @@ lib.Array_Enumeration_Benchmark.restype = ctypes.c_double
 lib.Array_Rank_Benchmark.argtypes = [ctypes.c_size_t]
 lib.Array_Rank_Benchmark.restype = ctypes.c_double
 
+lib.Sorted_Array_Ordered_Insertion_Benchmark.argtypes = [ctypes.c_size_t]
+lib.Sorted_Array_Ordered_Insertion_Benchmark.restype = ctypes.c_double
+
 for num in number_of_items:
     print(f'Array_Insert_At_Head_Benchmark time {num}: {lib.Array_Insert_At_Head_Benchmark(num)}\n')
     print(f'Array_Insert_At_Tail_Benchmark time {num}: {lib.Array_Insert_At_Tail_Benchmark(num)}\n')

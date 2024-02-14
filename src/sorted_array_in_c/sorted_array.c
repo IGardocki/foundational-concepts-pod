@@ -103,22 +103,22 @@ ResultCode Ordered_Insertion(Array* arr, item_comparator comparator, void* item)
     return kSuccess;
 }
 
-int main(){
-    Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
-    Init_Sorted_Array(sizeof(size_t), &array); // passes in int size, and the reference to the array
+// int main(){
+//     Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
+//     Init_Sorted_Array(sizeof(size_t), &array); // passes in int size, and the reference to the array
 
-    int test0 = 853;
-    int test1 = 850;
-    int test2 = 851;
+//     int test0 = 853;
+//     int test1 = 850;
+//     int test2 = 851;
 
-    // printf("TEST: %i\n", PIntComparator(&test1, &test0));
-    Ordered_Insertion(array, PIntComparator, &test1); // passes the array pointer and a reference to test into the function
-    Ordered_Insertion(array, PIntComparator, &test2);
-    Ordered_Insertion(array, PIntComparator, &test0);
-    // Test_Ordered_Insertion(array, PIntComparator, &test2);
-    printf("Hello World\n");
-    free(array);
-}
+//     // printf("TEST: %i\n", PIntComparator(&test1, &test0));
+//     Ordered_Insertion(array, PIntComparator, &test1); // passes the array pointer and a reference to test into the function
+//     Ordered_Insertion(array, PIntComparator, &test2);
+//     Ordered_Insertion(array, PIntComparator, &test0);
+//     // Test_Ordered_Insertion(array, PIntComparator, &test2);
+//     printf("Hello World\n");
+//     free(array);
+// }
 
 
 // ORIGINAL CODE I WROTE
