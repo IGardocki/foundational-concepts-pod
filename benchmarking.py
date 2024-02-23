@@ -9,11 +9,12 @@ lib = ctypes.CDLL('./algo.so')
 
 number_of_items = [10 ** 2, 10 ** 3, 10 ** 4, 10 ** 5]
 
-class CtypesEnum(IntEnum):
-    """A ctypes-compatible IntEnum superclass."""
-    @classmethod
-    def from_param(cls, obj):
-        return int(obj)
+# FOR LATER USE
+# class CtypesEnum(IntEnum):
+#     """A ctypes-compatible IntEnum superclass."""
+#     @classmethod
+#     def from_param(cls, obj):
+#         return int(obj)
 
 
 lib.Array_Insert_At_Head_Benchmark.argtypes = [ctypes.c_size_t]
@@ -34,8 +35,8 @@ lib.Array_Enumeration_Benchmark.restype = ctypes.c_double
 lib.Array_Rank_Benchmark.argtypes = [ctypes.c_size_t]
 lib.Array_Rank_Benchmark.restype = ctypes.c_double
 
-lib.Sorted_Array_Ordered_Insertion_Benchmark.argtypes = [ctypes.c_size_t]
-lib.Sorted_Array_Ordered_Insertion_Benchmark.restype = ctypes.c_double
+# lib.Sorted_Array_Ordered_Insertion_Benchmark.argtypes = [ctypes.c_size_t]
+# lib.Sorted_Array_Ordered_Insertion_Benchmark.restype = ctypes.c_double
 
 for num in number_of_items:
     print(f'Array_Insert_At_Head_Benchmark time {num}: {lib.Array_Insert_At_Head_Benchmark(num)}\n')

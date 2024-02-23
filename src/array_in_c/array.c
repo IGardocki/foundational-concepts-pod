@@ -51,7 +51,8 @@ ResultCode Insert_At_Head(Array* arr, void* item) {
         arr->array = temp_arr;
 
         // moves the array head over one block
-        memmove((char*)arr->array + arr->item_size, arr->array,arr->item_size*arr->arr_size);
+
+        memmove((char*)arr->array + arr->item_size, arr->array, arr->item_size*arr->arr_size);
         arr->arr_size +=1;
         // inserts the new item where the previous head item was 
         memcpy(arr->array, item, arr->item_size);

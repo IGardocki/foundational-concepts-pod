@@ -86,7 +86,7 @@ ResultCode LinkedList_Insertion(LinkedList* linked_list, double item_to_insert, 
 void LinkedList_Search(LinkedList* linked_list, double item_to_search_for){
     for(int i = 0; i < linked_list->number_of_items; i++){
         printf("hi");
-        linked_list
+        // linked_list
     }
 
 }
@@ -121,14 +121,14 @@ void PrintLinkedList(LinkedList* linked_list){
     printf("END PRINTOUT\n");
 }
 
-int main (){
-    LinkedList* linked_list = NULL;
-    LinkedList_Init(&linked_list);
-    LinkedList_Insertion(linked_list, 12, 1);
-    LinkedList_Insertion(linked_list, 1, 0);
-    LinkedList_Insertion(linked_list, 3, 1);
-    PrintLinkedList(linked_list);
-    LinkedList_Search(linked_list, 12);
-    // printf("Hello World\n");
-    free(linked_list);
-}
+// int main (){
+//     LinkedList* linked_list = NULL;
+//     LinkedList_Init(&linked_list);
+//     LinkedList_Insertion(linked_list, 12, 1);
+//     LinkedList_Insertion(linked_list, 1, 0);
+//     LinkedList_Insertion(linked_list, 3, 1);
+//     PrintLinkedList(linked_list);
+//     LinkedList_Search(linked_list, 12);
+//     // printf("Hello World\n");
+//     free(linked_list);
+// }

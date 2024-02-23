@@ -1,4 +1,5 @@
 #include "sorted_array.h"
+#include "../array_in_c/array.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>

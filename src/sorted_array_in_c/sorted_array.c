@@ -1,4 +1,5 @@
 // CODE I WROTE AFTER WRITING ARRAY IN C
+#include "../array_in_c/array.h"
 #include "sorted_array.h"
 #include "../utils/utils.h"
 #include "../utils/comparators.h"
@@ -59,64 +60,75 @@ ResultCode Create_First_Sorted_Arr_Item(Array* arr, void* item){
 // }
 
 ResultCode Ordered_Insertion(Array* arr, item_comparator comparator, void* item) {
-    printf("ITEM TO INSERT: %d\n", *(int*)item);
     if(arr == NULL || item == NULL) return kNullGuard;
+    printf("-------------------\n");
+    printf("item: %d\n", *(int*)item);
 
     if(arr -> arr_size == 0) {
-        int result_code = Create_First_Sorted_Arr_Item(arr, item);
-    } else {
-    // TODO: find rank of thing to be inserted 
-    ///////////////////// THIS IS JUST INSERTING AT HEAD FOR TEST PURPOSES //////////////////////
-    // arr->arr_size +=1;
-
-    //     // syntax is realloc(void *pointer, size_t size)
-    void* temp_arr = realloc(arr->array, (arr->arr_size +1) * arr->item_size);
-    //     // sets the array pointer to the temp_arr
-    arr->array = temp_arr;
-
-    //     // moves the array head over one block
-    memmove((char*)arr->array + arr->item_size, arr->array,arr->item_size*arr->arr_size);
-    arr->arr_size +=1;
-    //     // inserts the new item where the previous head item was 
-    memcpy(arr->array, item, arr->item_size);
-    ///////////////////////////////////////////////////////////////////////////////////////////
+        return Create_First_Sorted_Arr_Item(arr, item);
+    } 
 
     int index_to_insert_at = 0;
-       printf("-------------------\n");
-    for(int i = 0; i < arr->arr_size; i++){
-        void* current = arr->array + i * arr->arr_size;
-        printf("i= %d\n",i);
-        printf("item = %d\n", *(int*)item);
-        printf("current = %d\n", *(int*)current);
-        printf("result= %d\n",comparator(item, current));
-        if(comparator(item, current) > 0){
-            index_to_insert_at++;
-        }
-        printf("index to insert at: %i\n", index_to_insert_at);
  
+    for(int i = 0; i < arr->arr_size; i++){
+        void* current = arr->array + (i * arr->arr_size);
+
+        printf("comparator value:");
+        if(comparator(item, current) < 0){
+            index_to_insert_at = i;
+            // printf("index to insert at: %i\n item: %d\n", index_to_insert_at, *(int*)item);
+            break;
+        }
     }
-           printf("-------------------\n");
+
+    Insert_At_Head(arr, item);
+    printf("index to insert at: %i\n item: %d\n", index_to_insert_at, *(int*)item);
+    //     //     // syntax is realloc(void *pointer, size_t size)
+    // arr->array = realloc(arr->array, (arr->arr_size +1) * arr->item_size);
+    // char* start_address = (char*)arr->array + (arr->item_size * index_to_insert_at);
+    // memcpy(start_address + arr->item_size, start_address, arr->item_size - index_to_insert_at * arr->item_size);
+    // memcpy(start_address, item, arr->item_size);
+    // arr->arr_size +=1;
+
+
+        //    printf("-------------------\n");
     // Array_Rank(arr, PIntComparator, &item, &rank_result_store);
 
-    }
+    
 
     return kSuccess;
 }
 
+void print_sorted_array(Array* arr){
+    printf("PRINTING ARRAY:\n");
+    printf("arr_size: %zu\n", arr->arr_size);
+    for(int i = 0; i < arr->arr_size; i++){
+        printf("%d: %d\n", i, ((int*)arr->array)[i]);
+    }
+}
+
 // int main(){
 //     Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
-//     Init_Sorted_Array(sizeof(size_t), &array); // passes in int size, and the reference to the array
+//     Init_Sorted_Array(sizeof(int), &array); // passes in int size, and the reference to the array
 
-//     int test0 = 853;
-//     int test1 = 850;
-//     int test2 = 851;
+//     int test0 = 850;
+//     int test1 = 851;
+//     int test2 = 888;
+//     int test3 = 123;
 
 //     // printf("TEST: %i\n", PIntComparator(&test1, &test0));
-//     Ordered_Insertion(array, PIntComparator, &test1); // passes the array pointer and a reference to test into the function
+//     Ordered_Insertion(array, PIntComparator, &test0); // passes the array pointer and a reference to test into the function
+//     print_sorted_array(array);
+//     Ordered_Insertion(array, PIntComparator, &test1);
+//     print_sorted_array(array);
 //     Ordered_Insertion(array, PIntComparator, &test2);
-//     Ordered_Insertion(array, PIntComparator, &test0);
-//     // Test_Ordered_Insertion(array, PIntComparator, &test2);
-//     printf("Hello World\n");
+//     print_sorted_array(array);
+//     Ordered_Insertion(array, PIntComparator, &test3);
+
+//     print_sorted_array(array);
+// //     Ordered_Insertion(array, PIntComparator, &test0);
+// //     // Test_Ordered_Insertion(array, PIntComparator, &test2);
+// //     printf("Hello World\n");
 //     free(array);
 // }
 
