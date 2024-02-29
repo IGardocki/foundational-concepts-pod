@@ -5,7 +5,7 @@
 
 // creates a pseudo class in C
 // typedef struct {
-//   size_t arr_size; // number of items in array
+//   size_t n; // number of items in array
 //   size_t item_size; // size of item. So we can have an arr of ints, or chars, or floats, etc etc
 //   void* array; // an opaque pointer (meaning it could point to any type) to the array
 // } Array;

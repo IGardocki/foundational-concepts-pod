@@ -34,26 +34,25 @@ ResultCode Create_First_Arr_Item(Array* arr, void* item){
         // copies memory using arr->array as the destination
         // the item as the source to copy, and arr->item_size as the size of memory to copy
         memcpy(arr->array, item, arr->item_size);
-        arr->arr_size += 1;
+        arr->n += 1;
         return kSuccess;
 }
 
 ResultCode Insert_At_Head(Array* arr, void* item) {
     if(arr == NULL || item == NULL) return kNullGuard;
 
-    if(arr -> arr_size == 0) {
+    if(arr->n == 0) {
         size_t result_code = Create_First_Arr_Item(arr, item);
     } else {
         // realloc resizes the memory block pointed to by the pointer that was allocated before
         // syntax is realloc(void *pointer, size_t size)
-        void* temp_arr = realloc(arr->array, (arr->arr_size +1) * arr->item_size);
+        void* temp_arr = realloc(arr->array, (arr->n +1) * arr->item_size);
         // sets the array pointer to the temp_arr
         arr->array = temp_arr;
 
         // moves the array head over one block
-
-        memmove((char*)arr->array + arr->item_size, arr->array, arr->item_size*arr->arr_size);
-        arr->arr_size +=1;
+        memmove((char*)arr->array + arr->item_size, arr->array, arr->item_size*arr->n);
+        arr->n +=1;
         // inserts the new item where the previous head item was 
         memcpy(arr->array, item, arr->item_size);
     }
@@ -64,14 +63,13 @@ ResultCode Insert_At_Head(Array* arr, void* item) {
 ResultCode Insert_At_Tail(Array* arr, void* item) {
     if(arr == NULL || item == NULL) return kNullGuard;
 
-    if(arr->arr_size == 0){
+    if(arr->n == 0){
        size_t result_code = Create_First_Arr_Item(arr, item);
     }
     else {
-        void* temp_arr = realloc(arr->array, (arr->arr_size +1) * arr->item_size);
-        arr->array = temp_arr;
-        memcpy(arr->array + arr->arr_size * arr->item_size, item, arr->item_size);
-        arr->arr_size +=1;
+        arr->array = realloc(arr->array, (arr->n +1) * arr->item_size);
+        memcpy(arr->array + arr->n * arr->item_size, item, arr->item_size);
+        arr->n +=1;
     }
     return kSuccess;
 }
@@ -80,7 +78,7 @@ ResultCode Insert_At_Tail(Array* arr, void* item) {
 ResultCode Array_Search(Array* arr, void* query, item_comparator comparator, void** result){
     if(arr == NULL || query == NULL || comparator == NULL || result == NULL) return kNullGuard;
 
-    for(int i = 0; i < arr->arr_size; i++){
+    for(int i = 0; i < arr->n; i++){
         void* current = arr->array + i * arr->item_size;
 
         if(comparator(current, query) == 0){
@@ -94,7 +92,7 @@ ResultCode Array_Search(Array* arr, void* query, item_comparator comparator, voi
 ResultCode Array_Max(Array* arr, item_comparator comparator, void** max_result){
     if(arr == NULL || comparator == NULL || max_result == NULL) return kNullGuard;
     void* max = arr->array;
-    for(int i = 1; i < arr->arr_size; i++){
+    for(int i = 1; i < arr->n; i++){
         void* current = arr->array + i * arr->item_size;
         if(comparator(max, current) < 0){
             max = current;
@@ -108,7 +106,7 @@ ResultCode Array_Max(Array* arr, item_comparator comparator, void** max_result){
 ResultCode Array_Enumeration(Array* arr, arr_enumerator enumerator) {
     if(arr == NULL || enumerator == NULL) return kNullGuard;
 
-    for(int i = 0; i < arr->arr_size; i++){
+    for(int i = 0; i < arr->n; i++){
         void* current = arr->array + i * arr->item_size;
         enumerator(current);
     }
@@ -117,7 +115,7 @@ ResultCode Array_Enumeration(Array* arr, arr_enumerator enumerator) {
 
 ResultCode Array_Rank(Array* arr, item_comparator comparator, void* item, int** rank_result) {
     int rank = 0;
-    for(int i = 0; i < arr->arr_size; i++){
+    for(int i = 0; i < arr->n; i++){
         void* current = arr->array + i * arr->item_size;
         // determines number of items in array that are larger than the item
         if(comparator(item, current) < 0){

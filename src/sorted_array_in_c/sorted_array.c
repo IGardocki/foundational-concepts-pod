@@ -35,7 +35,7 @@ ResultCode Create_First_Sorted_Arr_Item(Array* arr, void* item){
         // copies memory using arr->array as the destination
         // the item as the source to copy, and arr->item_size as the size of memory to copy
         memcpy(arr->array, item, arr->item_size);
-        arr->arr_size += 1;
+        arr->n += 1;
         printf("CREATED ARR\n");
         return kSuccess;
 }
@@ -43,8 +43,8 @@ ResultCode Create_First_Sorted_Arr_Item(Array* arr, void* item){
 // for use in determining rankings
 // ResultCode Array_Rank(Array* arr, item_comparator comparator, void* item, int** rank_result) {
 //     int rank = 0;
-//     printf("array size = %zu\n", arr->arr_size);
-//     for(int i = 0; i < arr->arr_size; i++){
+//     printf("array size = %zu\n", arr->n);
+//     for(int i = 0; i < arr->n; i++){
 //         void* current = arr->array + i * arr->item_size;
 //         // determines number of items in array that are larger than the item
 //         printf("i= %d, current: %d\n", i, *(int*)current);
@@ -64,31 +64,34 @@ ResultCode Ordered_Insertion(Array* arr, item_comparator comparator, void* item)
     printf("-------------------\n");
     printf("item: %d\n", *(int*)item);
 
-    if(arr -> arr_size == 0) {
+    if(arr -> n == 0) {
         return Create_First_Sorted_Arr_Item(arr, item);
     } 
 
-    int index_to_insert_at = 0;
+    int index_to_insert_at = -1;
  
-    for(int i = 0; i < arr->arr_size; i++){
-        void* current = arr->array + (i * arr->arr_size);
-
-        printf("comparator value:");
+    for(int i = 0; i < arr->n; i++){
+        void* current = arr->array + (i * arr->item_size);
+        printf("comparator value: %d\n", comparator(item, current));
         if(comparator(item, current) < 0){
             index_to_insert_at = i;
-            // printf("index to insert at: %i\n item: %d\n", index_to_insert_at, *(int*)item);
             break;
         }
     }
 
-    Insert_At_Head(arr, item);
+    printf("idnex to insert at after for loop: %d\n", index_to_insert_at);
+    if(index_to_insert_at == -1){
+        index_to_insert_at = arr->n;
+    }
+//  TODO: RENAME n TO N
+// TODO: NEED TO TEST 
     printf("index to insert at: %i\n item: %d\n", index_to_insert_at, *(int*)item);
-    //     //     // syntax is realloc(void *pointer, size_t size)
-    // arr->array = realloc(arr->array, (arr->arr_size +1) * arr->item_size);
-    // char* start_address = (char*)arr->array + (arr->item_size * index_to_insert_at);
-    // memcpy(start_address + arr->item_size, start_address, arr->item_size - index_to_insert_at * arr->item_size);
-    // memcpy(start_address, item, arr->item_size);
-    // arr->arr_size +=1;
+        //     // syntax is realloc(void *pointer, size_t size)
+    arr->array = realloc(arr->array, (arr->n + 1) * arr->item_size);
+    char* start_address = (char*)arr->array + (arr->item_size * index_to_insert_at);
+    memmove(start_address + arr->item_size, start_address, (arr->n - index_to_insert_at) * arr->item_size);
+    memcpy(start_address, item, arr->item_size);
+    arr->n +=1;
 
 
         //    printf("-------------------\n");
@@ -101,36 +104,38 @@ ResultCode Ordered_Insertion(Array* arr, item_comparator comparator, void* item)
 
 void print_sorted_array(Array* arr){
     printf("PRINTING ARRAY:\n");
-    printf("arr_size: %zu\n", arr->arr_size);
-    for(int i = 0; i < arr->arr_size; i++){
+    printf("n: %zu\n", arr->n);
+    for(int i = 0; i < arr->n; i++){
         printf("%d: %d\n", i, ((int*)arr->array)[i]);
     }
 }
 
-// int main(){
-//     Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
-//     Init_Sorted_Array(sizeof(int), &array); // passes in int size, and the reference to the array
+int main(){
+    Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
+    Init_Sorted_Array(sizeof(int), &array); // passes in int size, and the reference to the array
 
-//     int test0 = 850;
-//     int test1 = 851;
-//     int test2 = 888;
-//     int test3 = 123;
+    int test0 = 850;
+    int test1 = 851;
+    int test2 = 888;
+    int test3 = 123;
 
-//     // printf("TEST: %i\n", PIntComparator(&test1, &test0));
-//     Ordered_Insertion(array, PIntComparator, &test0); // passes the array pointer and a reference to test into the function
-//     print_sorted_array(array);
-//     Ordered_Insertion(array, PIntComparator, &test1);
-//     print_sorted_array(array);
-//     Ordered_Insertion(array, PIntComparator, &test2);
-//     print_sorted_array(array);
-//     Ordered_Insertion(array, PIntComparator, &test3);
+    // printf("TEST: %i\n", PIntComparator(&test1, &test0));
+    Ordered_Insertion(array, PIntComparator, &test3); // passes the array pointer and a reference to test into the function
+    print_sorted_array(array);
+    Ordered_Insertion(array, PIntComparator, &test1);
+    print_sorted_array(array);
+    Ordered_Insertion(array, PIntComparator, &test2);
+    print_sorted_array(array);
+    Ordered_Insertion(array, PIntComparator, &test0);
 
-//     print_sorted_array(array);
-// //     Ordered_Insertion(array, PIntComparator, &test0);
-// //     // Test_Ordered_Insertion(array, PIntComparator, &test2);
-// //     printf("Hello World\n");
-//     free(array);
-// }
+    print_sorted_array(array);
+//     Ordered_Insertion(array, PIntComparator, &test0);
+    test0 = 138;
+    print_sorted_array(array);
+//     // Test_Ordered_Insertion(array, PIntComparator, &test2);
+//     printf("Hello World\n");
+    free(array);
+}
 
 
 // ORIGINAL CODE I WROTE
@@ -140,14 +145,14 @@ void print_sorted_array(Array* arr){
 // #include <string.h>
 
 // // this will be the length of the array
-// int arr_size = 0;
+// int n = 0;
 
 // int* init_array(int item) {
 //     int *array;
 //     int num_elements = 1;
 //     array = malloc(sizeof(item) * num_elements);
 //     array[0] = item;
-//     arr_size++;
+//     n++;
 //     if(!array){
 //         printf("Allocating %d bytes failed\n", (int)sizeof(int) * num_elements);
 //     }
@@ -156,8 +161,8 @@ void print_sorted_array(Array* arr){
 
 // void ordered_insertion(int* array, int item){
 //     // if there is no greater item, will put the item at the end
-//     int index_of_greater_item = arr_size; 
-//     for (int i = 0; i < arr_size; i++){
+//     int index_of_greater_item = n; 
+//     for (int i = 0; i < n; i++){
 //         if(array[i] > item){
 //             // determines the index of the first item that is greater than the item
 //             index_of_greater_item = i;
@@ -167,14 +172,14 @@ void print_sorted_array(Array* arr){
 
 //     // starting with the last element, sets each element greater than the item to one 
 //     // index above
-//     for(int i = arr_size - 1; i >= index_of_greater_item; i--){
+//     for(int i = n - 1; i >= index_of_greater_item; i--){
 //         array[i + 1] = array[i];
 //     }
 
 //     // inserts the new item into the index where the first element greater than it 
 //     // used to be
 //     array[index_of_greater_item] = item;
-//     arr_size++;
+//     n++;
 // }
 
 // int binary_search(int* array, int query, int low, int high) {
@@ -202,13 +207,13 @@ void print_sorted_array(Array* arr){
 
 // int max_retrieval(int* array){
 //     // locate max in arr
-//     return array[arr_size-1];
+//     return array[n-1];
 // }
 
 // int predecessor(int* array, int query){
 //     // get element directly before item 
 //     // find element
-//     int queryIndex = binary_search(array, query, 0, arr_size-1);
+//     int queryIndex = binary_search(array, query, 0, n-1);
 //     if(queryIndex == -1 || queryIndex == 0){
 //         // handle if an item is not found or if item if the first in an array
 //         return -1;
@@ -220,8 +225,8 @@ void print_sorted_array(Array* arr){
 // int successor(int* array, int query){
 //     // get element directly after item 
 //     // find element 
-//     int queryIndex = binary_search(array, query, 0, arr_size-1);
-//     if(queryIndex == -1 || queryIndex == arr_size-1){
+//     int queryIndex = binary_search(array, query, 0, n-1);
+//     if(queryIndex == -1 || queryIndex == n-1){
 //         // handle if an item is not found or if item if the last in an array
 //         return -1;
 //     }
@@ -231,7 +236,7 @@ void print_sorted_array(Array* arr){
 
 // int select(int* array, int index){
 //     // get item at specific index
-//     if(index >= arr_size || index < 0){
+//     if(index >= n || index < 0){
 //         // handle if index given is out of range of array
 //         return -1;
 //     }
@@ -242,7 +247,7 @@ void print_sorted_array(Array* arr){
 //     // determine how many elements in array are less than the given item
 //     // the index of an element will be how many elements are less than it
 //     // need to figure out how to handle duplicates here
-//     int queryIndex = binary_search(array, query, 0, arr_size-1);
+//     int queryIndex = binary_search(array, query, 0, n-1);
 //     return queryIndex;
 // }
 
@@ -255,10 +260,10 @@ void print_sorted_array(Array* arr){
 //     ordered_insertion(array, 90);
 //     ordered_insertion(array, 0);
 //     ordered_insertion(array, 11);
-//     for(int i = 0; i < arr_size; i++){
+//     for(int i = 0; i < n; i++){
 //         printf("%d\n", array[i]);
 //     }
-//     int binary_search_result = binary_search(array, 4, 0, arr_size-1);
+//     int binary_search_result = binary_search(array, 4, 0, n-1);
 //     printf("Binary Search Result: %d\n", binary_search_result);
 //     int min_retrieval_result = min_retrieval(array);
 //     printf("Min Retrieval Result: %d\n", min_retrieval_result);
