@@ -47,18 +47,13 @@ double Array_Insert_At_Tail_Benchmark(size_t number_of_items_to_insert){
     Array* array = NULL;
     Init_Array(sizeof(int), &array);
 
-    // size_t arr_of_items_to_insert[number_of_items_to_insert];
-    // for(int i = 0; i < number_of_items_to_insert; i++){
-    //     arr_of_items_to_insert[i] = rand();
-    // }
-
     // start clock
     clock_t t = clock(); 
 
     // insert each thing into the array at the tail
     for(int i = 0; i < number_of_items_to_insert; i++){
         size_t number = rand();
-        Insert_At_Tail(array, &number);
+        Array_Insert_At_Tail(array, &number);
     }
 
     // get time elapsed 
@@ -79,7 +74,7 @@ double Array_Search_Benchmark(size_t number_of_items_to_insert){
 
     // insert each thing into the array at the tail
     for(int i = 0; i < number_of_items_to_insert; i++){
-        Insert_At_Tail(array, &arr_of_items_to_insert[i]);
+        Array_Insert_At_Tail(array, &arr_of_items_to_insert[i]);
     }
 
     // create a search result store
@@ -111,7 +106,7 @@ double Array_Max_Benchmark(size_t number_of_items_to_insert){
 
     // insert each thing into the array at the tail
     for(int i = 0; i < number_of_items_to_insert; i++){
-        Insert_At_Tail(array, &arr_of_items_to_insert[i]);
+        Array_Insert_At_Tail(array, &arr_of_items_to_insert[i]);
     }
 
     // create a max result store
@@ -152,7 +147,7 @@ double Array_Enumeration_Benchmark(size_t number_of_items_to_insert){
 
     // insert each thing into the array at the tail
     for(int i = 0; i < number_of_items_to_insert; i++){
-        Insert_At_Tail(array, &arr_of_items_to_insert[i]);
+        Array_Insert_At_Tail(array, &arr_of_items_to_insert[i]);
     }
 
     // start clock
@@ -179,7 +174,7 @@ double Array_Rank_Benchmark(size_t number_of_items_to_insert){
 
     // insert each thing into the array at the tail
     for(int i = 0; i < number_of_items_to_insert; i++){
-        Insert_At_Tail(array, &arr_of_items_to_insert[i]);
+        Array_Insert_At_Tail(array, &arr_of_items_to_insert[i]);
     }
 
     // create query to get rank for

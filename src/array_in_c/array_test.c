@@ -34,7 +34,7 @@ static void ShouldInsertAtTail(){
     int test0 = 15; //declares an int
     int test1 = 20;
     Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
-    ResultCode result = Insert_At_Tail(array, &test1);
+    ResultCode result = Array_Insert_At_Tail(array, &test1);
     CU_ASSERT_EQUAL(result, kSuccess);
 }
 
@@ -45,7 +45,7 @@ static void ShouldSearchArrayAndReturnKFound(){
     int test1 = 20;
  
     Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
-    Insert_At_Tail(array, &test1);
+    Array_Insert_At_Tail(array, &test1);
 
     void* search_result_store = NULL;
     ResultCode result = Array_Search(array, &test0, PIntComparator, &search_result_store);
@@ -62,7 +62,7 @@ static void ShouldSearchArrayAndReturnKNotFound(){
     int notPresentInArr = 851;
  
     Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
-    Insert_At_Tail(array, &test1);
+    Array_Insert_At_Tail(array, &test1);
 
     void* search_result_store = NULL;
     ResultCode result = Array_Search(array, &notPresentInArr, PIntComparator, &search_result_store);
@@ -78,7 +78,7 @@ static void ShouldFindMax(){
  
 
     Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
-    Insert_At_Tail(array, &test1);
+    Array_Insert_At_Tail(array, &test1);
     Array_Insert_At_Head(array, &test2);
 
     void* max_result_store = NULL;
@@ -101,7 +101,7 @@ static void ShouldEnumerate(){
  
 
     Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
-    Insert_At_Tail(array, &test1);
+    Array_Insert_At_Tail(array, &test1);
     Array_Insert_At_Head(array, &test2);
 
     ResultCode result = Array_Enumeration(array, Enumerator);
@@ -117,7 +117,7 @@ static void ShouldRank(){
  
 
     Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
-    Insert_At_Tail(array, &test1);
+    Array_Insert_At_Tail(array, &test1);
     Array_Insert_At_Head(array, &test2);
 
     int test_for_rank = 10;

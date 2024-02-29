@@ -60,7 +60,7 @@ ResultCode Array_Insert_At_Head(Array* arr, void* item) {
     return kSuccess;
 }
 
-ResultCode Insert_At_Tail(Array* arr, void* item) {
+ResultCode Array_Insert_At_Tail(Array* arr, void* item) {
     if(arr == NULL || item == NULL) return kNullGuard;
 
     if(arr->n == 0){
