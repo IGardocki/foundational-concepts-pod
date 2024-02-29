@@ -24,7 +24,7 @@ static void ShouldInsertAtHead(){
     Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
     Init_Array(sizeof(int), &array); // passes in int size, and the reference to the array
     int test0 = 15; //declares an int
-    ResultCode result = Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
+    ResultCode result = Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
     CU_ASSERT_EQUAL(result, kSuccess);
 }
 
@@ -33,7 +33,7 @@ static void ShouldInsertAtTail(){
     Init_Array(sizeof(int), &array); // passes in int size, and the reference to the array
     int test0 = 15; //declares an int
     int test1 = 20;
-    Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
+    Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
     ResultCode result = Insert_At_Tail(array, &test1);
     CU_ASSERT_EQUAL(result, kSuccess);
 }
@@ -44,7 +44,7 @@ static void ShouldSearchArrayAndReturnKFound(){
     int test0 = 15; //declares an int
     int test1 = 20;
  
-    Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
+    Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
     Insert_At_Tail(array, &test1);
 
     void* search_result_store = NULL;
@@ -61,7 +61,7 @@ static void ShouldSearchArrayAndReturnKNotFound(){
     int test1 = 20;
     int notPresentInArr = 851;
  
-    Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
+    Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
     Insert_At_Tail(array, &test1);
 
     void* search_result_store = NULL;
@@ -77,9 +77,9 @@ static void ShouldFindMax(){
     int test2 = 850;
  
 
-    Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
+    Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
     Insert_At_Tail(array, &test1);
-    Insert_At_Head(array, &test2);
+    Array_Insert_At_Head(array, &test2);
 
     void* max_result_store = NULL;
     ResultCode result = Array_Max(array, PIntComparator, &max_result_store);
@@ -100,9 +100,9 @@ static void ShouldEnumerate(){
     int test2 = 850;
  
 
-    Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
+    Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
     Insert_At_Tail(array, &test1);
-    Insert_At_Head(array, &test2);
+    Array_Insert_At_Head(array, &test2);
 
     ResultCode result = Array_Enumeration(array, Enumerator);
     CU_ASSERT_EQUAL(result, kSuccess);
@@ -116,9 +116,9 @@ static void ShouldRank(){
     int test2 = 850;
  
 
-    Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
+    Array_Insert_At_Head(array, &test0); // passes the array pointer and a reference to test into the function
     Insert_At_Tail(array, &test1);
-    Insert_At_Head(array, &test2);
+    Array_Insert_At_Head(array, &test2);
 
     int test_for_rank = 10;
     int* rank_result_store = NULL;

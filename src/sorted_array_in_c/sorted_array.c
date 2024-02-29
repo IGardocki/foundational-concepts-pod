@@ -61,8 +61,6 @@ ResultCode Create_First_Sorted_Arr_Item(Array* arr, void* item){
 
 ResultCode Ordered_Insertion(Array* arr, item_comparator comparator, void* item) {
     if(arr == NULL || item == NULL) return kNullGuard;
-    // printf("-------------------\n");
-    // printf("item: %d\n", *(int*)item);
 
     if(arr -> n == 0) {
         return Create_First_Sorted_Arr_Item(arr, item);
@@ -72,31 +70,21 @@ ResultCode Ordered_Insertion(Array* arr, item_comparator comparator, void* item)
  
     for(int i = 0; i < arr->n; i++){
         void* current = arr->array + (i * arr->item_size);
-        // printf("comparator value: %d\n", comparator(item, current));
         if(comparator(item, current) < 0){
             index_to_insert_at = i;
             break;
         }
     }
 
-    // printf("idnex to insert at after for loop: %d\n", index_to_insert_at);
     if(index_to_insert_at == -1){
         index_to_insert_at = arr->n;
     }
-    // printf("index to insert at: %i\n item: %d\n", index_to_insert_at, *(int*)item);
-        //     // syntax is realloc(void *pointer, size_t size)
+
     arr->array = realloc(arr->array, (arr->n + 1) * arr->item_size);
     char* start_address = (char*)arr->array + (arr->item_size * index_to_insert_at);
     memmove(start_address + arr->item_size, start_address, (arr->n - index_to_insert_at) * arr->item_size);
     memcpy(start_address, item, arr->item_size);
     arr->n +=1;
-
-
-        //    printf("-------------------\n");
-    // Array_Rank(arr, PIntComparator, &item, &rank_result_store);
-
-    
-
     return kSuccess;
 }
 

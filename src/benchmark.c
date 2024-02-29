@@ -33,7 +33,7 @@ double Array_Insert_At_Head_Benchmark(size_t number_of_items_to_insert){
     // insert each thing into the array at the head
     for(int i = 0; i < number_of_items_to_insert; i++){
         size_t number = rand();
-        Insert_At_Head(array, &number);
+        Array_Insert_At_Head(array, &number);
     }
 
     // get time elapsed 
