@@ -40,6 +40,27 @@ static void ShouldOrderedInsert(){
     CU_ASSERT_EQUAL(((int*)array->array)[3], 888);
 }
 
+static void ShouldMinRetrieval(){
+    Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
+    Init_Sorted_Array(sizeof(int), &array); // passes in int size, and the reference to the array
+
+    int test0 = 850;
+    int test1 = 851;
+    int test2 = 888;
+    int test3 = 138;
+
+    Sorted_Array_Ordered_Insertion(array, PIntComparator, &test3); // passes the array pointer and a reference to test into the function
+    Sorted_Array_Ordered_Insertion(array, PIntComparator, &test1);
+    Sorted_Array_Ordered_Insertion(array, PIntComparator, &test2);
+    Sorted_Array_Ordered_Insertion(array, PIntComparator, &test0);
+    void* min_result_store = NULL;
+
+    Sorted_Array_Min_Retrieval(array, &min_result_store);
+    CU_ASSERT_EQUAL(*(int*)min_result_store, 138);
+}
+
+
+
 int sorted_arr_noop(void) { return 0; }
 
 int RegisterSortedArrayTests(){
@@ -47,6 +68,7 @@ int RegisterSortedArrayTests(){
                                CU_TEST_INFO(ShouldPass),
                                CU_TEST_INFO(ShouldInitArray),
                                CU_TEST_INFO(ShouldOrderedInsert),
+                               CU_TEST_INFO(ShouldMinRetrieval),
                                CU_TEST_INFO_NULL
 
 };

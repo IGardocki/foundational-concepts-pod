@@ -96,6 +96,30 @@ void print_sorted_array(Array* arr){
     }
 }
 
+// ResultCode Sorted_Array_Min_Retrieval(Array* arr, void** min_result){
+//     if(arr == NULL || min_result == NULL) return kNullGuard;
+//     // locate min in arr
+//     *min_result = arr->array[0];
+//     return kSuccess;
+// }
+
+ResultCode Sorted_Array_Min_Retrieval(Array* arr, void** min_result){
+    if(arr == NULL || min_result == NULL) return kNullGuard;
+    void* min = arr->array;
+    // *min_result = min;
+    *min_result = arr->array;
+    return kSuccess;
+    // for(int i = 0; i < arr->n; i++){
+    //     void* current = arr->array + i * arr->item_size;
+
+    //     if(comparator(current, query) == 0){
+    //         *result = current;
+    //         return kFound;
+    //     }
+    // }
+    // return kNotFound;
+}
+
 // int main(){
 //     Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
 //     Init_Sorted_Array(sizeof(int), &array); // passes in int size, and the reference to the array
