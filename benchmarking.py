@@ -3,7 +3,6 @@
 import ctypes
 from enum import IntEnum
 import time
-# from random import randint
 
 lib = ctypes.CDLL('./algo.so')
 
@@ -35,8 +34,8 @@ lib.Array_Enumeration_Benchmark.restype = ctypes.c_double
 lib.Array_Rank_Benchmark.argtypes = [ctypes.c_size_t]
 lib.Array_Rank_Benchmark.restype = ctypes.c_double
 
-# lib.Sorted_Array_Ordered_Insertion_Benchmark.argtypes = [ctypes.c_size_t]
-# lib.Sorted_Array_Ordered_Insertion_Benchmark.restype = ctypes.c_double
+lib.Sorted_Array_Ordered_Insertion_Benchmark.argtypes = [ctypes.c_size_t]
+lib.Sorted_Array_Ordered_Insertion_Benchmark.restype = ctypes.c_double
 
 for num in number_of_items:
     print(f'Array_Insert_At_Head_Benchmark time {num}: {lib.Array_Insert_At_Head_Benchmark(num)}\n')
@@ -45,6 +44,7 @@ for num in number_of_items:
     print(f'Array_Max_Benchmark time {num}: {lib.Array_Max_Benchmark(num)}\n')
     print(f'Array_Enumeration_Benchmark time {num}: {lib.Array_Enumeration_Benchmark(num)}\n')
     print(f'Array_Rank_Benchmark time {num}: {lib.Array_Rank_Benchmark(num)}\n')
+    print(f'Sorted_Array_Ordered_Insertion time {num}: {lib.Sorted_Array_Ordered_Insertion_Benchmark(num)}\n')
 
 
 # eventually will gen charts

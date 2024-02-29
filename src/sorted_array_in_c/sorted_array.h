@@ -18,7 +18,7 @@ typedef void (*arr_enumerator)(const void* x);
 
 // takes in the size of the item so we could init an array of any type, and a pointer to a pointer to an array
 ResultCode Init_Sorted_Array(size_t item_size, Array**);
-ResultCode Ordered_Insertion(Array* arr, item_comparator comparator, void* item);
+ResultCode Sorted_Array_Ordered_Insertion(Array* arr, item_comparator comparator, void* item);
 // ResultCode Insert_At_Head(Array* arr, void* item);
 // ResultCode Insert_At_Tail(Array* arr, void* item);
 // ResultCode Array_Search(Array* arr, void* query, item_comparator comparator , void** result);

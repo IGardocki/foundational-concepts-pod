@@ -30,10 +30,10 @@ static void ShouldOrderedInsert(){
     int test2 = 888;
     int test3 = 123;
 
-    Ordered_Insertion(array, PIntComparator, &test3); // passes the array pointer and a reference to test into the function
-    Ordered_Insertion(array, PIntComparator, &test1);
-    Ordered_Insertion(array, PIntComparator, &test2);
-    Ordered_Insertion(array, PIntComparator, &test0);
+    Sorted_Array_Ordered_Insertion(array, PIntComparator, &test3); // passes the array pointer and a reference to test into the function
+    Sorted_Array_Ordered_Insertion(array, PIntComparator, &test1);
+    Sorted_Array_Ordered_Insertion(array, PIntComparator, &test2);
+    Sorted_Array_Ordered_Insertion(array, PIntComparator, &test0);
     CU_ASSERT_EQUAL(((int*)array->array)[0], 123);
     CU_ASSERT_EQUAL(((int*)array->array)[1], 850);
     CU_ASSERT_EQUAL(((int*)array->array)[2], 851);

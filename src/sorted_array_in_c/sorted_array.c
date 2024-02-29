@@ -59,7 +59,7 @@ ResultCode Create_First_Sorted_Arr_Item(Array* arr, void* item){
 //     return kSuccess;
 // }
 
-ResultCode Ordered_Insertion(Array* arr, item_comparator comparator, void* item) {
+ResultCode Sorted_Array_Ordered_Insertion(Array* arr, item_comparator comparator, void* item) {
     if(arr == NULL || item == NULL) return kNullGuard;
 
     if(arr -> n == 0) {

@@ -1,31 +1,16 @@
 #include "./benchmark.h"
 #include "./array_in_c/array.h"
 #include "./utils/comparators.h"
-// #include "./sorted_array_in_c/sorted_array.h"
+#include "./sorted_array_in_c/sorted_array.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-// TRYING TO CREATE FUNCTION TO GENERATE ARRS OF ITEMS TO TEST, BUT WILL WORK THIS LATER
-// void foo(size_t *buf, size_t count) {
-//     for(int i = 0; i < count; ++i)
-//         buf[i] = i;
-// }
-
 double Array_Insert_At_Head_Benchmark(size_t number_of_items_to_insert){
     Array* array = NULL;
     Init_Array(sizeof(int), &array);
-
-    // size_t arr_of_items_to_insert[*number_of_items_to_insert] = {0};
-    // foo(arr_of_items_to_insert, number_of_items_to_insert);
-
-    // create array of things to insert that are random ints
-    // size_t arr_of_items_to_insert[number_of_items_to_insert];
-    // for(int i = 0; i < number_of_items_to_insert; i++){
-    //     arr_of_items_to_insert[i] = rand();
-    // }
 
     // start clock
     clock_t t = clock(); 
@@ -116,12 +101,10 @@ double Array_Max_Benchmark(size_t number_of_items_to_insert){
     clock_t t = clock(); 
 
     for(int i = 0; i < number_of_items_to_insert; i++){
-        // Insert_At_Tail(array, &arr_of_items_to_insert[i]);
         max_result_store = NULL;
         Array_Max(array, PIntComparator, &max_result_store);
     }
-    // Array_Max(array, PIntComparator, &max_result_store);
-
+ 
     // get time elapsed 
     t = clock() - t;
     double time = ((double)t) / CLOCKS_PER_SEC;
@@ -194,31 +177,23 @@ double Array_Rank_Benchmark(size_t number_of_items_to_insert){
     printf("TIME: %f\n", time);
     return time;
 }
-// ORDERED INSERTION IS NOT COMPLETELY FUNCTIONAL YET
-// double Sorted_Array_Ordered_Insertion_Benchmark(size_t number_of_items_to_insert){
-//     Array* sorted_array = NULL;
-//     Init_Sorted_Array(sizeof(size_t), &sorted_array);
 
-//     // size_t arr_of_items_to_insert[*number_of_items_to_insert] = {0};
-//     // foo(arr_of_items_to_insert, number_of_items_to_insert);
+double Sorted_Array_Ordered_Insertion_Benchmark(size_t number_of_items_to_insert){
+    Array* array = NULL;
+    Init_Array(sizeof(int), &array);
 
-//     // create array of things to insert that are random ints
-//     size_t arr_of_items_to_insert[number_of_items_to_insert];
-//     for(int i = 0; i < number_of_items_to_insert; i++){
-//         arr_of_items_to_insert[i] = rand();
-//     }
+    // start clock
+    clock_t t = clock(); 
 
-//     // start clock
-//     clock_t t = clock(); 
+    // ordered insert each thing into the array
+    for(int i = 0; i < number_of_items_to_insert; i++){
+        size_t number = rand();
+        Sorted_Array_Ordered_Insertion(array, PIntComparator, &number);
+    }
 
-//     // insert each thing into the array at the head
-//     for(int i = 0; i < number_of_items_to_insert; i++){
-//         Ordered_Insertion(sorted_array, PIntComparator &arr_of_items_to_insert[i]);
-//     }
-
-//     // get time elapsed 
-//     t = clock() - t;
-//     double time = ((double)t) / CLOCKS_PER_SEC;
-//     printf("TIME: %f\n", time);
-//     return time;
-// }
+    // get time elapsed 
+    t = clock() - t;
+    double time = ((double)t) / CLOCKS_PER_SEC;
+    printf("TIME: %f\n", time);
+    return time;
+}
