@@ -1,6 +1,6 @@
 #include "CUnit/Basic.h"
 extern int RegisterArrayTests(void);
-// extern int RegisterSortedArrayTests(void);
+extern int RegisterSortedArrayTests(void);
 
 
 int main()
@@ -17,10 +17,10 @@ int main()
       return -1;
    }
 
-   // if(RegisterSortedArrayTests() != 0){
-   //    CU_cleanup_registry();
-   //    return -1;
-   // }
+   if(RegisterSortedArrayTests() != 0){
+      CU_cleanup_registry();
+      return -1;
+   }
 
    
 
