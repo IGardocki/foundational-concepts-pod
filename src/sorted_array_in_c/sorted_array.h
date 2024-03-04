@@ -20,6 +20,7 @@ typedef void (*arr_enumerator)(const void* x);
 ResultCode Init_Sorted_Array(size_t item_size, Array**);
 ResultCode Sorted_Array_Ordered_Insertion(Array* arr, item_comparator comparator, void* item);
 ResultCode Sorted_Array_Min_Retrieval(Array* arr, void** min_result);
+ResultCode Sorted_Array_Max_Retrieval(Array* arr, void** max_result);
 // ResultCode Insert_At_Head(Array* arr, void* item);
 // ResultCode Insert_At_Tail(Array* arr, void* item);
 // ResultCode Array_Search(Array* arr, void* query, item_comparator comparator , void** result);

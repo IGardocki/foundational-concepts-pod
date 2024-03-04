@@ -105,19 +105,14 @@ void print_sorted_array(Array* arr){
 
 ResultCode Sorted_Array_Min_Retrieval(Array* arr, void** min_result){
     if(arr == NULL || min_result == NULL) return kNullGuard;
-    void* min = arr->array;
-    // *min_result = min;
     *min_result = arr->array;
     return kSuccess;
-    // for(int i = 0; i < arr->n; i++){
-    //     void* current = arr->array + i * arr->item_size;
+}
 
-    //     if(comparator(current, query) == 0){
-    //         *result = current;
-    //         return kFound;
-    //     }
-    // }
-    // return kNotFound;
+ResultCode Sorted_Array_Max_Retrieval(Array* arr, void** max_result){
+    if(arr == NULL || max_result == NULL) return kNullGuard;
+    *max_result = arr->array + arr->item_size * (arr->n-1);
+    return kSuccess;
 }
 
 // int main(){
