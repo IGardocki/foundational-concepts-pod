@@ -115,6 +115,29 @@ ResultCode Sorted_Array_Max_Retrieval(Array* arr, void** max_result){
     return kSuccess;
 }
 
+ResultCode Sorted_Array_Binary_Search(Array* arr, void* query, void** search_result){
+    if(arr == NULL || search_result == NULL) return kNullGuard;
+    return kSuccess;
+    // int binary_search(int* array, int query, int low, int high) {
+//   if (high >= low) {
+//     int mid = low + (high - low) / 2;
+
+//     // If found at middle, return index of item
+//     if (array[mid] == query)
+//       return mid;
+
+//     // Search the left half
+//     if (array[mid] > query)
+//       return binary_search(array, query, low, mid - 1);
+
+//     // Search the right half
+//     return binary_search(array, query, mid + 1, high);
+//   }
+//   return -1;
+// }
+}
+
+
 // int main(){
 //     Array* array = NULL; // calls a pointer to an Array struct array and sets it to NULL
 //     Init_Sorted_Array(sizeof(int), &array); // passes in int size, and the reference to the array
